@@ -1,212 +1,212 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jamiya Masjid - Premium</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <title>Jamiya Masjid | Prayer Times & Countdown</title>
 
-    <style>
-      body {
-        scroll-behavior: smooth;
-      }
+  <!-- SEO -->
+  <meta name="description" content="Jamiya Masjid prayer times with live countdown timer and next prayer highlight." />
+  <meta name="keywords" content="masjid, prayer times, namaz timing, islamic, mosque" />
+  <meta name="author" content="MR. Reehan MP" />
 
-      .card {
-        transition: all 0.35s ease;
-      }
-      .card:hover {
-        transform: translateY(-6px) scale(1.02);
-      }
-    </style>
-  </head>
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833314.png" />
 
-  <body class="bg-gradient-to-b from-white to-emerald-50 text-gray-800">
-    <div class="flex justify-center mb-12 mt-2">
-      <div
-        class="group relative bg-white/70 backdrop-blur-xl border border-emerald-100 rounded-3xl px-20 py-10 shadow-lg transition-all duration-500 hover:shadow-2xl hover:scale-105"
-      >
-        <!-- Glow Effect -->
-        <div
-          class="absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-100 transition duration-500 blur-xl"
-        ></div>
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        <!-- Content -->
-        <div class="relative z-10 text-center">
-          <p class="text-xs uppercase tracking-[3px] text-emerald-500 mb-2">
-            Next Prayer In
-          </p>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-          <h3
-            id="countdownTimer"
-            class="text-4xl md:text-5xl font-bold text-gray-800 tracking-widest"
-          >
-            00:00:00
-          </h3>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
 
-          <div class="w-12 h-1 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
-        </div>
-      </div>
+    .card {
+      transition: all 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-white to-emerald-50 text-gray-800">
+
+<!-- COUNTDOWN -->
+<div class="flex justify-center px-4 mt-6 mb-12">
+  <div class="w-full max-w-md group relative bg-white/80 backdrop-blur-xl border border-emerald-100 rounded-3xl px-8 py-8 shadow-lg transition-all duration-500 hover:shadow-2xl hover:scale-105">
+
+    <div class="absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-100 transition duration-500 blur-xl"></div>
+
+    <div class="relative z-10 text-center">
+      <p class="text-xs uppercase tracking-[3px] text-emerald-500 mb-2">
+        Next Prayer In
+      </p>
+
+      <h3 id="countdownTimer" class="text-3xl md:text-4xl font-bold tracking-widest">
+        00:00:00
+      </h3>
+
+      <div class="w-10 h-1 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
     </div>
 
-    <!-- SECTION -->
-    <section id="prayer" class="py-2 px-6 text-center">
-      <h5 class="text-emerald-600 tracking-widest text-sm mb-2">
-        DAILY PRAYERS
-      </h5>
-      <h2 class="text-4xl md:text-5xl font-bold mb-4">Prayer Times</h2>
-      <p class="text-gray-500 mb-12">
-        Join us for congregational prayers. All are welcome.
-      </p>
-
-      <div
-        id="prayerContainer"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto mb-10"
-      ></div>
-
-      <!-- JUMUAH -->
-      <div class="max-w-sm mx-auto">
-        <div
-          class="bg-gradient-to-r from-emerald-600 to-teal-500 text-white rounded-2xl p-6 shadow-xl hover:scale-105 transition"
-        >
-          <p class="uppercase text-xs tracking-widest">Friday Only</p>
-          <h3 class="text-2xl font-bold">Jumu'ah</h3>
-          <p class="text-lg" dir="rtl">الجمعة</p>
-          <h4 class="text-3xl font-bold mt-2">1:45 PM</h4>
-        </div>
-      </div>
-
-      <p class="text-sm text-gray-500 mt-6">
-        ⚠️ Times may vary — please check the monthly timetable at the mosque.
-      </p>
-    </section>
-
-    <script>
-      const prayers = [
-        { name: "FAJR", arabic: "الفجر", time: "5:45 AM", icon: "🌅" },
-        { name: "ZUHR", arabic: "الظهر", time: "2:00 PM", icon: "☀️" },
-        { name: "ASR", arabic: "العصر", time: "5:15 PM", icon: "🌤️" },
-        { name: "MAGHRIB", arabic: "المغرب", time: "6:50 PM", icon: "🌇" },
-        { name: "ISHA", arabic: "العشاء", time: "8:30 PM", icon: "🌙" },
-      ];
-
-      function convertToMinutes(timeStr) {
-        let [time, period] = timeStr.split(" ");
-        let [h, m] = time.split(":").map(Number);
-
-        if (period === "PM" && h !== 12) h += 12;
-        if (period === "AM" && h === 12) h = 0;
-
-        return h * 60 + m;
-      }
-
-      function getNextPrayerIndex() {
-        const now = new Date();
-        const currentTime = now.getHours() * 60 + now.getMinutes();
-
-        const times = prayers.map((p) => convertToMinutes(p.time));
-
-        for (let i = 0; i < times.length; i++) {
-          if (currentTime < times[i]) return i;
-        }
-
-        return 0;
-      }
-
-      function getNextPrayerTime() {
-        const now = new Date();
-        const nextIndex = getNextPrayerIndex();
-
-        let [time, period] = prayers[nextIndex].time.split(" ");
-        let [h, m] = time.split(":").map(Number);
-
-        if (period === "PM" && h !== 12) h += 12;
-        if (period === "AM" && h === 12) h = 0;
-
-        let next = new Date();
-        next.setHours(h, m, 0, 0);
-
-        // next day case
-        if (next <= now) {
-          next.setDate(next.getDate() + 1);
-        }
-
-        return next;
-      }
-
-      function updateCountdown() {
-        const now = new Date();
-        const nextTime = getNextPrayerTime();
-
-        const diff = nextTime - now;
-
-        const hrs = Math.floor(diff / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const format = (n) => String(n).padStart(2, "0");
-
-        document.getElementById("countdownTimer").innerText =
-          `${format(hrs)}:${format(mins)}:${format(secs)}`;
-      }
-
-      const container = document.getElementById("prayerContainer");
-
-      function renderPrayers() {
-        container.innerHTML = "";
-        const nextIndex = getNextPrayerIndex();
-
-        prayers.forEach((p, i) => {
-          const isNext = i === nextIndex;
-
-          const card = document.createElement("div");
-          card.className = `card relative p-6 rounded-2xl border bg-white shadow-sm ${
-            isNext ?
-              "border-emerald-500 shadow-xl scale-105"
-            : "border-gray-200"
-          }`;
-
-          card.innerHTML = `
-${isNext ? '<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs px-3 py-1 rounded-full animate-pulse">Next Prayer</span>' : ""}
-
-<div class="flex items-center justify-center gap-2 mb-3">
-  <span class="text-2xl">${p.icon}</span>
-  <p class="text-sm font-semibold tracking-widest">${p.name}</p>
+  </div>
 </div>
 
-<p class="text-lg font-semibold mb-1" dir="rtl">${p.arabic}</p>
+<!-- SECTION -->
+<section id="prayer" class="py-6 px-4 text-center max-w-7xl mx-auto">
 
-<h3 class="text-2xl font-bold ${isNext ? "text-emerald-600" : ""}">
-  ${p.time}
-</h3>
-`;
+  <h5 class="text-emerald-600 tracking-widest text-sm mb-2">
+    DAILY PRAYERS
+  </h5>
 
-          container.appendChild(card);
-        });
-      }
+  <h2 class="text-4xl md:text-5xl font-bold mb-4">
+    Prayer Times
+  </h2>
 
-      // initial render
-      renderPrayers();
-      updateCountdown();
+  <p class="text-gray-500 mb-10">
+    Join us for congregational prayers. All are welcome.
+  </p>
 
-      // update every second
-      setInterval(() => {
-        updateCountdown();
-      }, 1000);
+  <!-- GRID -->
+  <div id="prayerContainer"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+  </div>
 
-      // refresh prayer highlight every minute
-      setInterval(renderPrayers, 60000);
-    </script>
+  <!-- JUMUAH -->
+  <div class="max-w-sm mx-auto">
+    <div class="bg-gradient-to-r from-emerald-600 to-teal-500 text-white rounded-2xl p-6 shadow-xl hover:scale-105 transition">
+      <p class="uppercase text-xs tracking-widest">Friday Only</p>
+      <h3 class="text-2xl font-bold">Jumu'ah</h3>
+      <p class="text-lg" dir="rtl">الجمعة</p>
+      <h4 class="text-3xl font-bold mt-2">1:45 PM</h4>
+    </div>
+  </div>
 
-    <!-- FOOTER -->
-    <footer
-      class="bg-gradient-to-r from-emerald-700 to-teal-600 text-white py-6 mt-5"
-    >
-      <div class="max-w-6xl mx-auto text-center space-y-2">
-        <p class="text-xs text-emerald-200">
-          © 2026 Created by <span class="font-semibold">MR. Reehan MP</span>
-        </p>
+  <p class="text-sm text-gray-500 mt-6">
+    ⚠️ Times may vary — please check timetable.
+  </p>
+
+</section>
+
+<script>
+const prayers = [
+  { name: "FAJR", arabic: "الفجر", time: "5:45 AM", icon: "🌅" },
+  { name: "ZUHR", arabic: "الظهر", time: "2:00 PM", icon: "☀️" },
+  { name: "ASR", arabic: "العصر", time: "5:15 PM", icon: "🌤️" },
+  { name: "MAGHRIB", arabic: "المغرب", time: "6:50 PM", icon: "🌇" },
+  { name: "ISHA", arabic: "العشاء", time: "8:30 PM", icon: "🌙" },
+];
+
+function convertToMinutes(timeStr) {
+  let [time, period] = timeStr.split(" ");
+  let [h, m] = time.split(":").map(Number);
+
+  if (period === "PM" && h !== 12) h += 12;
+  if (period === "AM" && h === 12) h = 0;
+
+  return h * 60 + m;
+}
+
+function getNextPrayerIndex() {
+  const now = new Date();
+  const current = now.getHours() * 60 + now.getMinutes();
+
+  const times = prayers.map(p => convertToMinutes(p.time));
+
+  for (let i = 0; i < times.length; i++) {
+    if (current < times[i]) return i;
+  }
+  return 0;
+}
+
+function getNextPrayerTime() {
+  const now = new Date();
+  const nextIndex = getNextPrayerIndex();
+
+  let [time, period] = prayers[nextIndex].time.split(" ");
+  let [h, m] = time.split(":").map(Number);
+
+  if (period === "PM" && h !== 12) h += 12;
+  if (period === "AM" && h === 12) h = 0;
+
+  let next = new Date();
+  next.setHours(h, m, 0, 0);
+
+  if (next <= now) next.setDate(next.getDate() + 1);
+
+  return next;
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const next = getNextPrayerTime();
+  const diff = next - now;
+
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const f = n => String(n).padStart(2, "0");
+
+  document.getElementById("countdownTimer").innerText =
+    `${f(h)}:${f(m)}:${f(s)}`;
+}
+
+function renderPrayers() {
+  const container = document.getElementById("prayerContainer");
+  container.innerHTML = "";
+
+  const nextIndex = getNextPrayerIndex();
+
+  prayers.forEach((p, i) => {
+    const isNext = i === nextIndex;
+
+    const card = document.createElement("div");
+    card.className = `card relative p-6 rounded-2xl border bg-white shadow-sm ${
+      isNext ? "border-emerald-500 shadow-xl scale-105" : "border-gray-200"
+    }`;
+
+    card.innerHTML = `
+      ${isNext ? '<span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs px-3 py-1 rounded-full animate-pulse">Next Prayer</span>' : ""}
+      
+      <div class="flex items-center justify-center gap-2 mb-3">
+        <span class="text-2xl">${p.icon}</span>
+        <p class="text-sm font-semibold tracking-widest">${p.name}</p>
       </div>
-    </footer>
-  </body>
+
+      <p class="text-lg font-semibold mb-1" dir="rtl">${p.arabic}</p>
+
+      <h3 class="text-2xl font-bold ${isNext ? "text-emerald-600" : ""}">
+        ${p.time}
+      </h3>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+renderPrayers();
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
+setInterval(renderPrayers, 60000);
+</script>
+
+<!-- FOOTER -->
+<footer class="bg-gradient-to-r from-emerald-700 to-teal-600 text-white py-6 mt-5">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="text-sm text-emerald-200">
+      © 2026 Created by <span class="font-semibold">MR. Reehan MP</span>
+    </p>
+  </div>
+</footer>
+
+</body>
 </html>
